@@ -1,1 +1,0 @@
-sc.exe create KoBlockchain binPath= "C:\Users\123\source\repos\KoBlockchain\bin\net8.0\KoBlockchain.P2P.exe" displayname= "KoBlockchain" start= delayed-auto
