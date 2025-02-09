@@ -33,22 +33,22 @@ await dbContext.MigrateAsync();
 var recurringJobManager = scope.ServiceProvider.GetRequiredService<IRecurringJobManager>();
 
 // Register block syncing job each 15 seconds
-//recurringJobManager.AddOrUpdate<BlockSyncJob>(
-//    BlockSyncJob.HangfireJobId,
-//    j => j.SyncBlocks(),
-//    "0/15 * * * * *");
+recurringJobManager.AddOrUpdate<BlockSyncJob>(
+    BlockSyncJob.HangfireJobId,
+    j => j.SyncBlocks(),
+    "0/15 * * * * *");
 
 // Register generation new transactions each minute
 recurringJobManager.AddOrUpdate<TransactionPusherJob>(
     TransactionPusherJob.HangfireJobId,
     j => j.PushNewTransactions(),
-    "0/15 * * * * *");
+    "* * * * *");
 
-// Register new block mining process each 5 minute
+// Register new block mining process each minute
 recurringJobManager.AddOrUpdate<BlockMiningJob>(
     BlockMiningJob.HangfireJobId,
     j => j.CreateBlock(),
-    "0/5 * * * * *");
+    "* * * * *");
 
 app.MapControllers();
 app.Run();
